@@ -493,11 +493,11 @@ __global__ void mma_bf16bf16f32_16_16_16(void *data, int *rc)
     *rc = 0;
 }
 
-__global__ void mma_bf16bf16f32_32_8_16(void *data, int *rc)
-{
-    mma_<__nv_bfloat16, float, 32, 8, 16>((float *)data);
-    *rc = 0;
-}
+// __global__ void mma_bf16bf16f32_32_8_16(void *data, int *rc)
+// {
+//     mma_<__nv_bfloat16, float, 32, 8, 16>((float *)data);
+//     *rc = 0;
+// }
 
 __global__ void mma_tf32tf32f32_16_16_8(void *data, int *rc)
 {
@@ -698,8 +698,8 @@ int main(int argc, char **argv)
         run<float, 16, 16, 16>((void *)mma_bf16bf16f32_16_16_16, targetTime);
         printf("mma_bf16bf16f32_32_8_16\n");
         run<float, 32, 8, 16>((void *)mma_bf16bf16f32_32_8_16, targetTime);
-        printf("mma_tf32tf32f32_16_16_8\n");
-        run<float, 16, 16, 8>((void *)mma_tf32tf32f32_16_16_8, targetTime);
+        // printf("mma_tf32tf32f32_16_16_8\n");
+        // run<float, 16, 16, 8>((void *)mma_tf32tf32f32_16_16_8, targetTime);
     }
     return 0;
 }
