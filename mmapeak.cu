@@ -94,10 +94,12 @@ __device__ void mma_s4_(OutputType *data)
 __device__ void mma_mxf4mxf4f32_16_8_64_(float *data)
 {
     uint32_t d[4] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
-    uint32_t sa = 0;
-    uint32_t sb = 0;
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
+    uint8_t sa_arr[4] = { 1, 5, 25, 127 };
+    uint8_t sb_arr[4] = { 55, 33, 4, 2 };
+    uint32_t sa = *reinterpret_cast<uint32_t*>(sa_arr);
+    uint32_t sb = *reinterpret_cast<uint32_t*>(sb_arr);
     static constexpr uint16_t bid_a = 0;
     static constexpr uint16_t tid_a = 0;
     static constexpr uint16_t bid_b = 0;
@@ -126,10 +128,12 @@ __device__ void mma_mxf4mxf4f32_16_8_64_(float *data)
 __device__ void mma_nvf4nvf4f32_16_8_64_(float *data)
 {
     uint32_t d[4] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
-    uint32_t sa = 0;
-    uint32_t sb = 0;
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
+    uint8_t sa_arr[4] = { 1, 5, 25, 127 };
+    uint8_t sb_arr[4] = { 55, 33, 4, 2 };
+    uint32_t sa = *reinterpret_cast<uint32_t*>(sa_arr);
+    uint32_t sb = *reinterpret_cast<uint32_t*>(sb_arr);
     static constexpr uint16_t bid_a = 0;
     static constexpr uint16_t tid_a = 0;
     static constexpr uint16_t bid_b = 0;
@@ -158,8 +162,8 @@ __device__ void mma_nvf4nvf4f32_16_8_64_(float *data)
 __device__ void mma_f4f4f16_16_8_32_(half *data)
 {
     uint32_t d[2] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
     for (unsigned k = 0; k < N_LOOP_INTERNAL; k++)
     {
         asm volatile(
@@ -178,8 +182,8 @@ __device__ void mma_f4f4f16_16_8_32_(half *data)
 __device__ void mma_f4f4f32_16_8_32_(float *data)
 {
     uint32_t d[4] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
     for (unsigned k = 0; k < N_LOOP_INTERNAL; k++)
     {
         asm volatile(
@@ -200,8 +204,8 @@ __device__ void mma_f4f4f32_16_8_32_(float *data)
 __device__ void mma_f6f6f16_16_8_32_(half *data)
 {
     uint32_t d[2] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
     for (unsigned k = 0; k < N_LOOP_INTERNAL; k++)
     {
         asm volatile(
@@ -220,8 +224,8 @@ __device__ void mma_f6f6f16_16_8_32_(half *data)
 __device__ void mma_f6f6f32_16_8_32_(float *data)
 {
     uint32_t d[4] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
     for (unsigned k = 0; k < N_LOOP_INTERNAL; k++)
     {
         asm volatile(
@@ -242,10 +246,12 @@ __device__ void mma_f6f6f32_16_8_32_(float *data)
 __device__ void mma_mxf6mxf6f32_16_8_32_(float *data)
 {
     uint32_t d[4] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
-    uint32_t sa = 0;
-    uint32_t sb = 0;
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
+    uint8_t sa_arr[4] = { 1, 5, 25, 127 };
+    uint8_t sb_arr[4] = { 55, 33, 4, 2 };
+    uint32_t sa = *reinterpret_cast<uint32_t*>(sa_arr);
+    uint32_t sb = *reinterpret_cast<uint32_t*>(sb_arr);
     static constexpr uint16_t bid_a = 0;
     static constexpr uint16_t tid_a = 0;
     static constexpr uint16_t bid_b = 0;
@@ -274,10 +280,12 @@ __device__ void mma_mxf6mxf6f32_16_8_32_(float *data)
 __device__ void mma_mxf8mxf8f32_16_8_32_(float *data)
 {
     uint32_t d[4] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
-    uint32_t sa = 0;
-    uint32_t sb = 0;
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
+    uint8_t sa_arr[4] = { 1, 5, 25, 127 };
+    uint8_t sb_arr[4] = { 55, 33, 4, 2 };
+    uint32_t sa = *reinterpret_cast<uint32_t*>(sa_arr);
+    uint32_t sb = *reinterpret_cast<uint32_t*>(sb_arr);
     static constexpr uint16_t bid_a = 0;
     static constexpr uint16_t tid_a = 0;
     static constexpr uint16_t bid_b = 0;
@@ -308,8 +316,8 @@ __device__ void mma_mxf8mxf8f32_16_8_32_(float *data)
 __device__ void mma_f8f8f16_16_8_32_(half *data)
 {
     uint32_t d[2] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
     for (unsigned k = 0; k < N_LOOP_INTERNAL; k++)
     {
         asm volatile(
@@ -328,8 +336,8 @@ __device__ void mma_f8f8f16_16_8_32_(half *data)
 __device__ void mma_f8f8f32_16_8_32_(float *data)
 {
     uint32_t d[4] = {0};
-    uint32_t a[4] = {0};
-    uint32_t b[2] = {0};
+    uint32_t a[4] = { 0xFEDCBAD8, 0x01234567, 0xFEDCBAD8, 0x01234567 };
+    uint32_t b[2] = { 0xFEDCBAD8, 0x01234567 };
     for (unsigned k = 0; k < N_LOOP_INTERNAL; k++)
     {
         asm volatile(
