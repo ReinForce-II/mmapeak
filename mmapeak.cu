@@ -14,8 +14,26 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <curand_kernel.h>
 
 using namespace nvcuda::wmma;
+
+template <typename T, typename FragmentType>
+__device__ void fill_fragment_randn(FragmentType &fragment, unsigned base_seed = 1234) {
+    // Unique seed calculation per thread (based on thread and block indices)
+    unsigned long long unique_seed = static_cast<unsigned long long>(base_seed) +
+                                       static_cast<unsigned long long>(
+                                           blockIdx.x * blockDim.x * blockDim.y +
+                                           threadIdx.y * blockDim.x + threadIdx.x);
+    curandState state;
+    curand_init(unique_seed, 0, 0, &state);
+    
+    // Fill the fragment with normally distributed random numbers casted to type T
+    for (unsigned i = 0; i < fragment.num_elements; i++) {
+        float rand_val = curand_normal(&state);
+        fragment.x[i] = static_cast<T>(rand_val); // TODO fix me for tf32
+    }
+}
 
 #define N_LOOP_INTERNAL 8192
 #define N_LOOP_CALIB 128
@@ -28,8 +46,8 @@ __device__ void mma_(OutputType *data)
     fragment<matrix_a, M, N, K, InputType, row_major> a;
     fragment<matrix_b, M, N, K, InputType, col_major> b;
     fill_fragment(d, 0);
-    fill_fragment(a, 0);
-    fill_fragment(b, 0);
+    fill_fragment_randn<InputType>(a);
+    fill_fragment_randn<InputType>(b);
     for (unsigned k = 0; k < N_LOOP_INTERNAL; k++)
     {
         mma_sync(d, a, b, d);
@@ -493,17 +511,17 @@ __global__ void mma_bf16bf16f32_16_16_16(void *data, int *rc)
     *rc = 0;
 }
 
-// __global__ void mma_bf16bf16f32_32_8_16(void *data, int *rc)
-// {
-//     mma_<__nv_bfloat16, float, 32, 8, 16>((float *)data);
-//     *rc = 0;
-// }
-
-__global__ void mma_tf32tf32f32_16_16_8(void *data, int *rc)
+__global__ void mma_bf16bf16f32_32_8_16(void *data, int *rc)
 {
-    mma_<precision::tf32, float, 16, 16, 8>((float *)data);
+    mma_<__nv_bfloat16, float, 32, 8, 16>((float *)data);
     *rc = 0;
 }
+
+// __global__ void mma_tf32tf32f32_16_16_8(void *data, int *rc)
+// {
+//     mma_<precision::tf32, float, 16, 16, 8>((float *)data);
+//     *rc = 0;
+// }
 #else
 __global__ void mma_bf16bf16f32_16_16_16(void *data, int *rc)
 {
